@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Akash Verma — Data Scientist & AI Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #fafaf8; --surface: #f3f2ee; --surface2: #eceae4;
+    --border: rgba(0,0,0,0.1); --border-strong: rgba(0,0,0,0.18);
+    --text: #1a1a18; --muted: #6b6b67; --hint: #9b9b96;
+    --accent: #0f6e56; --accent-light: #e1f5ee; --accent-mid: #1D9E75;
+    --ff-display: 'DM Serif Display', serif; --ff-body: 'DM Sans', sans-serif;
+    --radius: 10px; --radius-lg: 14px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #131312; --surface: #1e1e1c; --surface2: #272724;
+      --border: rgba(255,255,255,0.09); --border-strong: rgba(255,255,255,0.16);
+      --text: #f0efe9; --muted: #9b9b96; --hint: #6b6b67;
+      --accent: #1D9E75; --accent-light: rgba(15,110,86,0.14); --accent-mid: #5DCAA5;
+    }
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--ff-body); background: var(--bg); color: var(--text); font-size: 16px; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 780px; margin: 0 auto; padding: 0 2rem; }
+
+  /* NAV */
+  nav { position: sticky; top: 0; z-index: 100; background: var(--bg); border-bottom: 0.5px solid var(--border); padding: 0.9rem 0; }
+  nav .wrap { display: flex; justify-content: space-between; align-items: center; }
+  .nav-logo { font-family: var(--ff-display); font-size: 20px; color: var(--text); text-decoration: none; letter-spacing: -0.02em; }
+  .nav-logo em { color: var(--accent); font-style: italic; }
+  .nav-right { display: flex; align-items: center; gap: 1.5rem; }
+  .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+  .nav-links a { font-size: 13px; font-weight: 500; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--text); }
+  .lang-toggle { display: flex; background: var(--surface); border: 0.5px solid var(--border-strong); border-radius: 99px; padding: 3px; gap: 2px; }
+  .lang-btn { font-size: 12px; font-weight: 500; padding: 4px 11px; border-radius: 99px; border: none; cursor: pointer; background: transparent; color: var(--muted); transition: all 0.2s; font-family: var(--ff-body); }
+  .lang-btn.active { background: var(--accent); color: #fff; }
+
+  /* HERO */
+  .hero { padding: 5rem 0 4rem; border-bottom: 0.5px solid var(--border); }
+  .hero-status { display: inline-flex; align-items: center; gap: 7px; font-size: 12px; font-weight: 500; color: var(--accent); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 1.5rem; }
+  .hero-status::before { content: ''; display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.6;transform:scale(0.85)} }
+  .hero h1 { font-family: var(--ff-display); font-size: clamp(42px, 7vw, 66px); font-weight: 400; line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 1.25rem; }
+  .hero h1 em { color: var(--accent); font-style: italic; }
+  .hero-sub { font-size: 17px; color: var(--muted); font-weight: 300; max-width: 540px; margin-bottom: 2rem; line-height: 1.8; }
+  .hero-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 2.5rem; }
+  .tag { font-size: 12px; padding: 5px 13px; border: 0.5px solid var(--border-strong); border-radius: 99px; color: var(--muted); background: var(--surface); }
+  .hero-cta { display: flex; flex-wrap: wrap; gap: 10px; }
+  .btn { display: inline-flex; align-items: center; gap: 7px; font-family: var(--ff-body); font-size: 13px; font-weight: 500; padding: 10px 20px; border-radius: var(--radius); text-decoration: none; transition: all 0.2s; cursor: pointer; border: 0.5px solid var(--border-strong); }
+  .btn-primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .btn-primary:hover { background: var(--accent-mid); border-color: var(--accent-mid); }
+  .btn-ghost { background: transparent; color: var(--text); }
+  .btn-ghost:hover { background: var(--surface); }
+
+  /* SECTIONS */
+  section { padding: 4rem 0; border-bottom: 0.5px solid var(--border); }
+  .section-label { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--hint); font-weight: 500; margin-bottom: 2rem; }
+
+  /* ABOUT */
+  .about-text { font-size: 16px; font-weight: 300; color: var(--text); max-width: 640px; line-height: 1.9; margin-bottom: 1.5rem; }
+  .about-meta { display: flex; flex-wrap: wrap; gap: 1.5rem; }
+  .meta-item { display: flex; align-items: center; gap: 7px; font-size: 13px; color: var(--muted); }
+  .meta-item svg { width: 15px; height: 15px; stroke: var(--accent); flex-shrink: 0; fill: none; }
+
+  /* SKILLS */
+  .skills-top { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+  .skills-blocks { display: flex; flex-direction: column; gap: 14px; }
+  .skill-block { background: var(--surface); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 1.25rem 1.5rem; }
+  .skill-block-title { font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 10px; }
+  .skill-pills { display: flex; flex-wrap: wrap; gap: 7px; }
+  .pill { font-size: 12px; padding: 4px 12px; background: var(--bg); border: 0.5px solid var(--border-strong); border-radius: 99px; color: var(--text); }
+
+  /* SOFT SKILLS */
+  .soft-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
+  .soft-card { background: var(--surface); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 1.1rem 1.25rem; text-align: center; }
+  .soft-icon { font-size: 22px; margin-bottom: 8px; }
+  .soft-name { font-size: 13px; font-weight: 500; color: var(--text); margin-bottom: 3px; }
+  .soft-desc { font-size: 11px; color: var(--muted); line-height: 1.5; }
+
+  /* EXPERIENCE */
+  .exp-list { display: flex; flex-direction: column; }
+  .exp-item { display: grid; grid-template-columns: 140px 1fr; gap: 1.5rem; padding: 1.5rem 0; border-bottom: 0.5px solid var(--border); }
+  .exp-item:last-child { border-bottom: none; }
+  .exp-date { font-size: 12px; color: var(--hint); padding-top: 4px; line-height: 1.5; }
+  .exp-role { font-size: 15px; font-weight: 500; color: var(--text); margin-bottom: 2px; }
+  .exp-company { font-size: 13px; color: var(--accent); margin-bottom: 10px; }
+  .exp-bullets { list-style: none; }
+  .exp-bullets li { font-size: 13px; color: var(--muted); line-height: 1.65; padding: 3px 0 3px 14px; position: relative; }
+  .exp-bullets li::before { content: '–'; position: absolute; left: 0; color: var(--hint); }
+
+  /* PROJECTS */
+  .projects-grid { display: flex; flex-direction: column; gap: 14px; }
+  .proj-card { background: var(--bg); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 1.5rem; transition: border-color 0.2s, background 0.2s; position: relative; overflow: hidden; }
+  .proj-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: transparent; transition: background 0.2s; }
+  .proj-card:hover { border-color: rgba(29,158,117,0.4); background: var(--accent-light); }
+  .proj-card:hover::before { background: var(--accent); }
+  .proj-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+  .proj-title { font-size: 15px; font-weight: 500; color: var(--text); }
+  .proj-date { font-size: 11px; color: var(--hint); padding-top: 3px; white-space: nowrap; margin-left: 1rem; }
+  .proj-desc { font-size: 13px; color: var(--muted); line-height: 1.7; margin-bottom: 12px; }
+  .proj-bullets { list-style: none; margin-bottom: 14px; }
+  .proj-bullets li { font-size: 12px; color: var(--muted); line-height: 1.6; padding: 2px 0 2px 14px; position: relative; }
+  .proj-bullets li::before { content: '·'; position: absolute; left: 3px; color: var(--accent); font-size: 16px; line-height: 1.2; }
+  .proj-links { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+  .proj-link { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 500; padding: 6px 13px; border: 0.5px solid var(--border-strong); border-radius: 99px; color: var(--text); background: var(--surface); text-decoration: none; transition: all 0.2s; }
+  .proj-link:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
+  .proj-link svg { width: 13px; height: 13px; stroke: currentColor; fill: none; flex-shrink: 0; }
+  .proj-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .proj-tag { font-size: 11px; padding: 3px 10px; background: var(--surface); border: 0.5px solid var(--border); border-radius: 99px; color: var(--muted); }
+
+  /* HOBBIES */
+  .hobbies-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .hobby-card { background: var(--surface); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 1.5rem 1.25rem; text-align: center; transition: border-color 0.2s, background 0.2s; }
+  .hobby-card:hover { border-color: rgba(29,158,117,0.4); background: var(--accent-light); }
+  .hobby-emoji { font-size: 32px; margin-bottom: 10px; display: block; }
+  .hobby-title { font-size: 14px; font-weight: 500; color: var(--text); margin-bottom: 5px; }
+  .hobby-desc { font-size: 12px; color: var(--muted); line-height: 1.6; }
+
+  /* EDUCATION */
+  .edu-list { display: flex; flex-direction: column; }
+  .edu-item { display: grid; grid-template-columns: 140px 1fr; gap: 1.5rem; padding: 1.5rem 0; border-bottom: 0.5px solid var(--border); }
+  .edu-item:last-child { border-bottom: none; }
+  .edu-date { font-size: 12px; color: var(--hint); padding-top: 4px; }
+  .edu-degree { font-size: 15px; font-weight: 500; color: var(--text); margin-bottom: 2px; }
+  .edu-uni { font-size: 13px; color: var(--accent); }
+
+  /* CONTACT */
+  .contact-intro { font-size: 16px; color: var(--muted); font-weight: 300; max-width: 500px; margin-bottom: 2rem; }
+  .contact-links { display: flex; flex-wrap: wrap; gap: 10px; }
+  .contact-link { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 500; padding: 10px 18px; border: 0.5px solid var(--border-strong); border-radius: var(--radius); color: var(--text); background: transparent; text-decoration: none; transition: all 0.2s; }
+  .contact-link:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
+  .contact-link svg { width: 16px; height: 16px; stroke: currentColor; fill: none; flex-shrink: 0; }
+
+  /* FOOTER */
+  footer { padding: 2rem 0; text-align: center; }
+  footer p { font-size: 12px; color: var(--hint); }
+
+  /* MOBILE */
+  @media (max-width: 620px) {
+    .exp-item, .edu-item { grid-template-columns: 1fr; gap: 4px; }
+    .nav-links { display: none; }
+    .hero { padding: 3rem 0; }
+    .hobbies-grid { grid-template-columns: 1fr; }
+    .skills-top { grid-template-columns: 1fr; }
+  }
+
+  /* LANG hide/show */
+  [data-lang] { display: none; }
+  body.lang-en [data-lang="en"] { display: revert; }
+  body.lang-de [data-lang="de"] { display: revert; }
+  /* inline elements need inline not revert */
+  span[data-lang], a[data-lang] { display: none; }
+  body.lang-en span[data-lang="en"], body.lang-en a[data-lang="en"] { display: inline; }
+  body.lang-de span[data-lang="de"], body.lang-de a[data-lang="de"] { display: inline; }
+</style>
+</head>
+<body class="lang-en">
+
+<nav>
+  <div class="wrap">
+    <a href="#" class="nav-logo">Akash <em>Verma</em></a>
+    <div class="nav-right">
+      <ul class="nav-links">
+        <li><a href="#about" data-lang="en">About</a><a href="#about" data-lang="de">Über mich</a></li>
+        <li><a href="#skills" data-lang="en">Skills</a><a href="#skills" data-lang="de">Fähigkeiten</a></li>
+        <li><a href="#experience" data-lang="en">Experience</a><a href="#experience" data-lang="de">Erfahrung</a></li>
+        <li><a href="#projects" data-lang="en">Projects</a><a href="#projects" data-lang="de">Projekte</a></li>
+        <li><a href="#contact" data-lang="en">Contact</a><a href="#contact" data-lang="de">Kontakt</a></li>
+      </ul>
+      <div class="lang-toggle">
+        <button class="lang-btn active" onclick="setLang('en')">EN</button>
+        <button class="lang-btn" onclick="setLang('de')">DE</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="wrap">
+    <div class="hero-status">
+      <span data-lang="en">Open to opportunities</span>
+      <span data-lang="de">Offen für Möglichkeiten</span>
+    </div>
+    <h1>
+      <span data-lang="en">Data Scientist<br>&amp; <em>AI Engineer</em></span>
+      <span data-lang="de">Data Scientist<br>&amp; <em>KI-Ingenieur</em></span>
+    </h1>
+    <p class="hero-sub">
+      <span data-lang="en">MSc Data Science student with 3+ years building data pipelines, ML systems, and LLM-powered applications. Based in Frankfurt, Germany. Open to relocation.</span>
+      <span data-lang="de">MSc-Student Data Science mit über 3 Jahren Erfahrung in Datenpipelines, ML-Systemen und LLM-Anwendungen. Wohnhaft in Frankfurt. Umzugsbereit.</span>
+    </p>
+    <div class="hero-tags">
+      <span class="tag">NLP &amp; LLMs</span>
+      <span class="tag">Computer Vision</span>
+      <span class="tag">RAG Systems</span>
+      <span class="tag">Data Engineering</span>
+      <span class="tag" data-lang="en">Open to relocation</span>
+      <span class="tag" data-lang="de">Umzugsbereit</span>
+    </div>
+    <div class="hero-cta">
+      <a href="mailto:i9akashv@gmail.com" class="btn btn-primary">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+        <span data-lang="en">Get in touch</span><span data-lang="de">Kontakt aufnehmen</span>
+      </a>
+      <a href="https://www.linkedin.com/in/akash-verma09" target="_blank" class="btn btn-ghost">LinkedIn</a>
+      <a href="https://github.com/AV259" target="_blank" class="btn btn-ghost">GitHub</a>
+    </div>
+  </div>
+</header>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="wrap">
+    <div class="section-label"><span data-lang="en">About</span><span data-lang="de">Über mich</span></div>
+    <p class="about-text" data-lang="en">I'm Akash — a software engineer and MSc Data Science student at Philipps-University Marburg specialising in NLP, computer vision, and applied ML. I've spent 3+ years in industry building ETL pipelines and ML systems at scale, and I'm now focused on LLM-based multimodal systems, RAG architectures, and real-world AI applications. I bring curiosity, precision, and a genuine love for problem-solving to everything I build.</p>
+    <p class="about-text" data-lang="de">Ich bin Akash — Softwareingenieur und MSc-Student in Data Science an der Philipps-Universität Marburg mit Schwerpunkt NLP, Computer Vision und angewandtem maschinellem Lernen. Mit über 3 Jahren Industrieerfahrung im Aufbau von ETL-Pipelines und ML-Systemen konzentriere ich mich jetzt auf LLM-basierte multimodale Systeme und RAG-Architekturen. Neugier, Präzision und echte Freude am Problemlösen prägen meine Arbeit.</p>
+    <div class="about-meta">
+      <span class="meta-item">
+        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+        Frankfurt, Germany
+      </span>
+      <span class="meta-item">
+        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+        i9akashv@gmail.com
+      </span>
+      <span class="meta-item">
+        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+        <span data-lang="en">German (B1) · English (C1)</span>
+        <span data-lang="de">Deutsch (B1) · Englisch (C1)</span>
+      </span>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="wrap">
+    <div class="section-label"><span data-lang="en">Technical Skills</span><span data-lang="de">Technische Fähigkeiten</span></div>
+    <div class="skills-blocks">
+      <div class="skill-block">
+        <div class="skill-block-title"><span data-lang="en">Languages &amp; Tools</span><span data-lang="de">Sprachen &amp; Werkzeuge</span></div>
+        <div class="skill-pills">
+          <span class="pill">Python</span><span class="pill">SQL</span><span class="pill">FastAPI</span><span class="pill">Git</span><span class="pill">Matplotlib</span><span class="pill">TensorFlow</span><span class="pill">LangChain</span>
+        </div>
+      </div>
+      <div class="skill-block">
+        <div class="skill-block-title"><span data-lang="en">Data Engineering &amp; Cloud</span><span data-lang="de">Datentechnik &amp; Cloud</span></div>
+        <div class="skill-pills">
+          <span class="pill">Microsoft Azure</span><span class="pill">SSIS / ETL</span><span class="pill">Data Pipelines</span><span class="pill">Feature Engineering</span><span class="pill">Statistical Analysis</span><span class="pill">EDA</span><span class="pill">Data Validation</span><span class="pill">Process Automation</span>
+        </div>
+      </div>
+      <div class="skill-block">
+        <div class="skill-block-title"><span data-lang="en">Machine Learning &amp; AI</span><span data-lang="de">Maschinelles Lernen &amp; KI</span></div>
+        <div class="skill-pills">
+          <span class="pill">LLMs</span><span class="pill">RAG</span><span class="pill">NLP</span><span class="pill">Computer Vision</span><span class="pill">CNNs</span><span class="pill">Transformers</span><span class="pill">HuggingFace</span><span class="pill">Prompt Engineering</span><span class="pill">Information Retrieval</span><span class="pill">Classification</span><span class="pill">Regression</span><span class="pill">Model Evaluation</span>
+        </div>
+      </div>
+    </div>
+
+    <br>
+    <div class="section-label" style="margin-top:1rem"><span data-lang="en">Soft Skills</span><span data-lang="de">Soft Skills</span></div>
+    <div class="soft-grid">
+      <div class="soft-card">
+        <div class="soft-icon">🤝</div>
+        <div class="soft-name"><span data-lang="en">Team Collaboration</span><span data-lang="de">Teamarbeit</span></div>
+        <div class="soft-desc"><span data-lang="en">Worked across time zones in Agile teams on complex engineering projects</span><span data-lang="de">Agile Zusammenarbeit über Zeitzonen hinweg in komplexen Projekten</span></div>
+      </div>
+      <div class="soft-card">
+        <div class="soft-icon">🧩</div>
+        <div class="soft-name"><span data-lang="en">Problem Solving</span><span data-lang="de">Problemlösung</span></div>
+        <div class="soft-desc"><span data-lang="en">Resolving critical production issues and designing systems that scale</span><span data-lang="de">Kritische Produktionsprobleme lösen und skalierbare Systeme entwerfen</span></div>
+      </div>
+      <div class="soft-card">
+        <div class="soft-icon">🔬</div>
+        <div class="soft-name"><span data-lang="en">Research Mindset</span><span data-lang="de">Forschungsdenken</span></div>
+        <div class="soft-desc"><span data-lang="en">Iterative experimentation and rigorous evaluation of ML models and architectures</span><span data-lang="de">Iterative Experimente und rigorose Auswertung von ML-Modellen</span></div>
+      </div>
+      <div class="soft-card">
+        <div class="soft-icon">🎓</div>
+        <div class="soft-name"><span data-lang="en">Teaching &amp; Mentoring</span><span data-lang="de">Lehren &amp; Mentoring</span></div>
+        <div class="soft-desc"><span data-lang="en">Designed and delivered NLP tutorials at university level</span><span data-lang="de">NLP-Tutorien auf Universitätsniveau konzipiert und durchgeführt</span></div>
+      </div>
+      <div class="soft-card">
+        <div class="soft-icon">🌍</div>
+        <div class="soft-name"><span data-lang="en">Cross-cultural Agility</span><span data-lang="de">Interkulturelle Kompetenz</span></div>
+        <div class="soft-desc"><span data-lang="en">Working and studying across India and Germany in multilingual environments</span><span data-lang="de">Arbeiten und Studieren in Indien und Deutschland in mehrsprachigen Umgebungen</span></div>
+      </div>
+      <div class="soft-card">
+        <div class="soft-icon">⚡</div>
+        <div class="soft-name"><span data-lang="en">Fast Learner</span><span data-lang="de">Schnelle Auffassungsgabe</span></div>
+        <div class="soft-desc"><span data-lang="en">Continuously upskilling across new frameworks, tools, and research areas</span><span data-lang="de">Kontinuierliche Weiterbildung in neuen Frameworks und Forschungsgebieten</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="wrap">
+    <div class="section-label"><span data-lang="en">Work Experience</span><span data-lang="de">Berufserfahrung</span></div>
+    <div class="exp-list">
+      <div class="exp-item">
+        <div class="exp-date">Apr 2025 – Sep 2025</div>
+        <div>
+          <div class="exp-role"><span data-lang="en">Student Assistant — NLP</span><span data-lang="de">Studentische Hilfskraft — NLP</span></div>
+          <div class="exp-company">Philipps-University Marburg, Germany</div>
+          <ul class="exp-bullets">
+            <li data-lang="en">Collaborated with faculty and students in fast-paced academic settings.</li>
+            <li data-lang="de">Zusammenarbeit mit Lehrenden und Studierenden in einem dynamischen akademischen Umfeld.</li>
+            <li data-lang="en">Independently designed and delivered NLP tutorials to student groups.</li>
+            <li data-lang="de">Eigenständige Konzeption und Durchführung von NLP-Tutorien für Studierendengruppen.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="exp-item">
+        <div class="exp-date">Mar 2021 – Dec 2023</div>
+        <div>
+          <div class="exp-role"><span data-lang="en">Software Engineer</span><span data-lang="de">Softwareingenieur</span></div>
+          <div class="exp-company">LTIMindtree Limited, India</div>
+          <ul class="exp-bullets">
+            <li data-lang="en">Designed, developed, and tested complex SSIS packages for ETL workflows in banking tax data.</li>
+            <li data-lang="de">Entwurf, Entwicklung und Test komplexer SSIS-Pakete für ETL-Workflows im Banksteuerbereich.</li>
+            <li data-lang="en">Developed automated data transformation and validation on structured enterprise data, reducing operational risk by minimising manual errors.</li>
+            <li data-lang="de">Automatisierte Datentransformation und -validierung für strukturierte Unternehmensdaten entwickelt, operationelle Risiken durch Minimierung manueller Fehler reduziert.</li>
+            <li data-lang="en">Improved accuracy by 50% through automated workflows for global banking tax data, ensuring regulatory compliance.</li>
+            <li data-lang="de">Genauigkeit um 50 % durch automatisierte Workflows für globale Banksteuerdaten verbessert und regulatorische Compliance sichergestellt.</li>
+            <li data-lang="en">Proactively resolved critical production issues to maintain uninterrupted monthly data workflows.</li>
+            <li data-lang="de">Kritische Produktionsprobleme proaktiv gelöst, um unterbrechungsfreie monatliche Daten-Workflows zu gewährleisten.</li>
+            <li data-lang="en">Collaborated in Agile teams across time zones, contributing to CI/CD pipelines and ETL automation.</li>
+            <li data-lang="de">In agilen Teams über Zeitzonen hinweg zusammengearbeitet und zu CI/CD-Pipelines sowie ETL-Automatisierung beigetragen.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="wrap">
+    <div class="section-label"><span data-lang="en">Projects</span><span data-lang="de">Projekte</span></div>
+    <div class="projects-grid">
+
+      <div class="proj-card">
+        <div class="proj-header">
+          <div class="proj-title"><span data-lang="en">RAG-Based Chatbot</span><span data-lang="de">RAG-basierter Chatbot</span></div>
+          <div class="proj-date">Dec 2025 – Feb 2026</div>
+        </div>
+        <p class="proj-desc" data-lang="en">LLM and RAG-powered chatbot for answering domain-specific university admission queries, deployed on Hugging Face Spaces.</p>
+        <p class="proj-desc" data-lang="de">LLM- und RAG-gestützter Chatbot zur Beantwortung domänenspezifischer Zulassungsfragen, bereitgestellt auf Hugging Face Spaces.</p>
+        <ul class="proj-bullets">
+          <li data-lang="en">Built a Scrapy + BeautifulSoup pipeline to crawl, structure, and process textual data into a knowledge base.</li>
+          <li data-lang="de">Scrapy + BeautifulSoup-Pipeline zum Crawlen, Strukturieren und Verarbeiten von Textdaten in eine Wissensbasis aufgebaut.</li>
+          <li data-lang="en">Designed and evaluated multiple chunking strategies (fixed, section-based, hybrid) to improve retrieval quality.</li>
+          <li data-lang="de">Mehrere Chunking-Strategien (fest, abschnittsbasiert, hybrid) zur Verbesserung der Retrievalqualität entworfen und bewertet.</li>
+          <li data-lang="en">Generated MiniLM embeddings and indexed document chunks in ChromaDB for semantic retrieval.</li>
+          <li data-lang="de">MiniLM-Embeddings generiert und Dokumentenabschnitte in ChromaDB für semantisches Retrieval indexiert.</li>
+          <li data-lang="en">Evaluated BM25, dense semantic, and hybrid retrieval using Precision, Recall, and MRR on a curated dataset.</li>
+          <li data-lang="de">BM25, dichtes semantisches und hybrides Retrieval mit Precision, Recall und MRR auf einem kuratierten Datensatz evaluiert.</li>
+          <li data-lang="en">Integrated Qwen 2.5–7B via HuggingFace Inference API, deployed using Streamlit on Hugging Face Spaces.</li>
+          <li data-lang="de">Qwen 2.5–7B über HuggingFace Inference API integriert und mit Streamlit auf Hugging Face Spaces deployt.</li>
+        </ul>
+        <div class="proj-links">
+          <a href="https://github.com/AV259/RAG_CHATBOT" target="_blank" class="proj-link">
+            <svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.2c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.4 5.4 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65S9 17.44 9 18v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+            GitHub
+          </a>
+          <a href="https://unimind.streamlit.app/" target="_blank" class="proj-link">
+            <svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+            <span data-lang="en">Live Demo</span><span data-lang="de">Live-Demo</span>
+          </a>
+        </div>
+        <div class="proj-tags">
+          <span class="proj-tag">Python</span><span class="proj-tag">RAG</span><span class="proj-tag">ChromaDB</span><span class="proj-tag">LangChain</span><span class="proj-tag">HuggingFace</span><span class="proj-tag">Streamlit</span><span class="proj-tag">BM25</span><span class="proj-tag">MiniLM</span>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-header">
+          <div class="proj-title"><span data-lang="en">Vision-Language Assistant AI App</span><span data-lang="de">Vision-Language-KI-Assistent</span></div>
+          <div class="proj-date">May 2025 – Dec 2025</div>
+        </div>
+        <p class="proj-desc" data-lang="en">Multimodal AI assistant that understands images and generates contextual natural language responses, deployed on Azure VM.</p>
+        <p class="proj-desc" data-lang="de">Multimodaler KI-Assistent, der Bilder versteht und kontextuelle natürlichsprachliche Antworten erzeugt, deployt auf Azure VM.</p>
+        <ul class="proj-bullets">
+          <li data-lang="en">Fine-tuned MobileLLaMA (1.4B) with LoRA and trained LDP alignment on Flickr8k and LLaVA-Instruct datasets.</li>
+          <li data-lang="de">MobileLLaMA (1,4B) mit LoRA feinabgestimmt und LDP-Alignment auf Flickr8k- und LLaVA-Instruct-Datensätzen trainiert.</li>
+          <li data-lang="en">Designed an end-to-end inference pipeline using CLIP vision encoder + learned LDP projector + LLM fusion.</li>
+          <li data-lang="de">End-to-End-Inferenzpipeline mit CLIP Vision Encoder + LDP-Projektor + LLM-Fusion entworfen.</li>
+          <li data-lang="en">Reduced hallucinations by improving prompt engineering; optimised memory and computation using PEFT.</li>
+          <li data-lang="de">Halluzinationen durch verbessertes Prompt Engineering reduziert; Speicher und Rechenleistung mit PEFT optimiert.</li>
+          <li data-lang="en">Built and deployed a RESTful inference service (FastAPI) on Azure VM, integrated with a mobile app via REST endpoints.</li>
+          <li data-lang="de">RESTful-Inferenzdienst (FastAPI) auf Azure VM gebaut und bereitgestellt, via REST-Endpunkte in eine mobile App integriert.</li>
+        </ul>
+        <div class="proj-links">
+          <a href="https://github.com/AV259/Vision-Language-Assistant" target="_blank" class="proj-link">
+            <svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.2c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.4 5.4 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65S9 17.44 9 18v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+            GitHub
+          </a>
+        </div>
+        <div class="proj-tags">
+          <span class="proj-tag">PyTorch</span><span class="proj-tag">LoRA / PEFT</span><span class="proj-tag">CLIP</span><span class="proj-tag">MobileLLaMA</span><span class="proj-tag">FastAPI</span><span class="proj-tag">Azure</span><span class="proj-tag">Computer Vision</span><span class="proj-tag">LLM</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- HOBBIES -->
+<section id="hobbies">
+  <div class="wrap">
+    <div class="section-label"><span data-lang="en">Beyond the Code</span><span data-lang="de">Jenseits des Codes</span></div>
+    <div class="hobbies-grid">
+      <div class="hobby-card">
+        <span class="hobby-emoji">🏏</span>
+        <div class="hobby-title"><span data-lang="en">Cricket</span><span data-lang="de">Kricket</span></div>
+        <div class="hobby-desc"><span data-lang="en">A lifelong passion — cricket taught me strategy, patience, and the value of teamwork under pressure.</span><span data-lang="de">Eine lebenslange Leidenschaft — Kricket lehrte mich Strategie, Geduld und Teamarbeit unter Druck.</span></div>
+      </div>
+      <div class="hobby-card">
+        <span class="hobby-emoji">🎵</span>
+        <div class="hobby-title"><span data-lang="en">Hindi Music</span><span data-lang="de">Hindi-Musik</span></div>
+        <div class="hobby-desc"><span data-lang="en">Singing Hindi songs is my creative outlet — music keeps me grounded and inspired.</span><span data-lang="de">Hindi-Lieder singen ist mein kreativer Ausgleich — Musik hält mich geerdet und inspiriert.</span></div>
+      </div>
+      <div class="hobby-card">
+        <span class="hobby-emoji">🏛️</span>
+        <div class="hobby-title"><span data-lang="en">Historical Travel</span><span data-lang="de">Historische Reisen</span></div>
+        <div class="hobby-desc"><span data-lang="en">Exploring historical places fuels my curiosity — every monument tells a story worth understanding.</span><span data-lang="de">Historische Orte erkunden beflügelt meine Neugier — jedes Denkmal erzählt eine Geschichte.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="wrap">
+    <div class="section-label"><span data-lang="en">Education</span><span data-lang="de">Ausbildung</span></div>
+    <div class="edu-list">
+      <div class="edu-item">
+        <div class="edu-date">Apr 2024 – <span data-lang="en">Present</span><span data-lang="de">Heute</span></div>
+        <div>
+          <div class="edu-degree"><span data-lang="en">MSc Data Science</span><span data-lang="de">M.Sc. Data Science</span></div>
+          <div class="edu-uni">Philipps-University Marburg, Germany</div>
+        </div>
+      </div>
+      <div class="edu-item">
+        <div class="edu-date">Jul 2016 – Jul 2020</div>
+        <div>
+          <div class="edu-degree"><span data-lang="en">B.Tech Information Technology</span><span data-lang="de">B.Tech Informationstechnologie</span></div>
+          <div class="edu-uni">APJ Abdul Kalam Technical University, Lucknow, India</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="wrap">
+    <div class="section-label"><span data-lang="en">Get in touch</span><span data-lang="de">Kontakt</span></div>
+    <p class="contact-intro" data-lang="en">Currently open to internships, part-time, and full-time roles in data science, ML engineering, and AI research. Open to relocation.</p>
+    <p class="contact-intro" data-lang="de">Derzeit offen für Praktika, Teilzeit- und Vollzeitstellen in Data Science, ML-Engineering und KI-Forschung. Umzugsbereit.</p>
+    <div class="contact-links">
+      <a href="mailto:i9akashv@gmail.com" class="contact-link">
+        <svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+        i9akashv@gmail.com
+      </a>
+      <a href="https://www.linkedin.com/in/akash-verma09" target="_blank" class="contact-link">
+        <svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        LinkedIn
+      </a>
+      <a href="https://github.com/AV259" target="_blank" class="contact-link">
+        <svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.2c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.4 5.4 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65S9 17.44 9 18v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+        GitHub
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>© 2026 Akash Verma</p>
+  </div>
+</footer>
+
+<script>
+function setLang(lang) {
+  document.body.className = 'lang-' + lang;
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.textContent.toLowerCase() === lang);
+  });
+  document.documentElement.lang = lang;
+}
+</script>
+</body>
+</html>
